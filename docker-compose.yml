@@ -1,0 +1,58 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api-gateway
+
+  api-gateway:
+    build: ./backend/api-gateway
+    ports:
+      - "5000:5000"
+    environment:
+      - AUTH_SERVICE_URL=http://auth-service:5001
+      - HANDBOOK_SERVICE_URL=http://handbook-service:5002
+      - CURRICULUM_SERVICE_URL=http://curriculum-service:5003
+      - CAREER_SERVICE_URL=http://career-service:5004
+      - ANNOUNCEMENT_SERVICE_URL=http://announcement-service:5005
+      - BOOKMARK_SERVICE_URL=http://bookmark-service:5006
+    depends_on:
+      - auth-service
+      - handbook-service
+      - curriculum-service
+      - career-service
+      - announcement-service
+      - bookmark-service
+
+  auth-service:
+    build: ./backend/auth-service
+    ports:
+      - "5001:5001"
+    environment:
+      - JWT_SECRET=mcs_secret_key
+
+  handbook-service:
+    build: ./backend/handbook-service
+    ports:
+      - "5002:5002"
+
+  curriculum-service:
+    build: ./backend/curriculum-service
+    ports:
+      - "5003:5003"
+
+  career-service:
+    build: ./backend/career-service
+    ports:
+      - "5004:5004"
+
+  announcement-service:
+    build: ./backend/announcement-service
+    ports:
+      - "5005:5005"
+
+  bookmark-service:
+    build: ./backend/bookmark-service
+    ports:
+      - "5006:5006"
