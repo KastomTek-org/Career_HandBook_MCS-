@@ -1,3 +1,2 @@
-export default function Careers({ controller }) {
-  return <main className="screen"><h2>Career Pathways</h2><div className="grid">{controller.state.careers.map((career) => <article className="card" key={career.id}><h3>{career.title}</h3><p>{career.description}</p></article>)}</div></main>;
-}
+import { Briefcase } from 'lucide-react'
+export default function Careers({ controller }) { return <main className="container"><h2 className="section-title">Career Pathways</h2><div className="grid grid-3">{controller.careers.map(c=><div className="card" key={c.id}><div className="icon-box" style={{background:'#f59e0b'}}><Briefcase/></div><h3>{c.title}</h3><p className="muted">{c.description}</p><span className="badge orange">{c.pathway}</span></div>)}</div></main> }

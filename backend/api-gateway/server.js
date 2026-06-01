@@ -1,24 +1,11 @@
-const express = require("express");
-const cors = require("cors");
-const { createProxyMiddleware } = require("http-proxy-middleware");
-
-const app = express();
-app.use(cors());
-
-const services = {
-  "/api/auth": process.env.AUTH_SERVICE_URL || "http://localhost:5001",
-  "/api/handbook": process.env.HANDBOOK_SERVICE_URL || "http://localhost:5002",
-  "/api/curriculum": process.env.CURRICULUM_SERVICE_URL || "http://localhost:5003",
-  "/api/careers": process.env.CAREER_SERVICE_URL || "http://localhost:5004",
-  "/api/announcements": process.env.ANNOUNCEMENT_SERVICE_URL || "http://localhost:5005",
-  "/api/bookmarks": process.env.BOOKMARK_SERVICE_URL || "http://localhost:5006",
-};
-
-Object.entries(services).forEach(([route, target]) => {
-  app.use(route, createProxyMiddleware({ target, changeOrigin: true, pathRewrite: { [`^${route}`]: "" } }));
-});
-
-app.get("/health", (req, res) => res.json({ service: "api-gateway", status: "OK", services }));
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log("api-gateway running on port " + PORT));
+require('dotenv').config(); const express=require('express'); const cors=require('cors'); const {createProxyMiddleware}=require('http-proxy-middleware');
+const app=express(); app.use(cors());
+const proxy=(target,pathRewrite={})=>createProxyMiddleware({target,changeOrigin:true,pathRewrite});
+app.use('/api/auth', proxy(process.env.AUTH_SERVICE_URL || 'http://localhost:5001'));
+app.use('/api/handbook', proxy(process.env.HANDBOOK_SERVICE_URL || 'http://localhost:5002'));
+app.use('/api/curriculum', proxy(process.env.CURRICULUM_SERVICE_URL || 'http://localhost:5003'));
+app.use('/api/careers', proxy(process.env.CAREER_SERVICE_URL || 'http://localhost:5004'));
+app.use('/api/announcements', proxy(process.env.ANNOUNCEMENT_SERVICE_URL || 'http://localhost:5005'));
+app.use('/api/bookmarks', proxy(process.env.BOOKMARK_SERVICE_URL || 'http://localhost:5006'));
+app.get('/health',(req,res)=>res.json({service:'api-gateway',status:'ok'}));
+app.listen(process.env.PORT||5000,()=>console.log('API Gateway running on port '+(process.env.PORT||5000)));

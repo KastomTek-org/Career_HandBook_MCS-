@@ -1,0 +1,1 @@
+const fs=require('fs'); const path=require('path'); const file=path.join(__dirname,'../data/careers.json'); const read=()=>JSON.parse(fs.readFileSync(file)); const write=d=>fs.writeFileSync(file,JSON.stringify(d,null,2)); exports.all=read; exports.create=data=>{const list=read(); const item={id:'c'+Date.now(),...data}; list.push(item); write(list); return item;};

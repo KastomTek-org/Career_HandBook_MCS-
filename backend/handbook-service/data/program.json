@@ -1,0 +1,19 @@
+{
+  "id": "program-1",
+  "title": "Bachelor of Mathematics and Computing Science",
+  "faculty": "Faculty of Business and Informatics",
+  "description": "The MCS program prepares students with mathematics, computing, programming, database, web, systems analysis, and professional ICT skills for Papua New Guinea and global technology careers.",
+  "graduateAttributes": [
+    "Problem solving",
+    "Software development",
+    "Database and data skills",
+    "Professional communication",
+    "Ethical ICT practice"
+  ],
+  "entryRequirements": [
+    "Meet university undergraduate entry requirements",
+    "Strong foundation in mathematics and English",
+    "Interest in computing, programming, and problem solving",
+    "Check department announcements for latest admission updates"
+  ]
+}

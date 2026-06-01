@@ -1,7 +1,1 @@
-const router = require("express").Router();
-const controller = require("../controllers/curriculumController");
-router.get("/units", controller.getUnits);
-router.get("/units/:id", controller.getUnitById);
-router.post("/units", controller.createUnit);
-router.put("/units/:id", controller.updateUnit);
-module.exports = router;
+const router=require('express').Router(); const c=require('../controllers/curriculumController'); router.get('/units',c.getUnits); router.get('/units/:id',c.getUnit); router.post('/units',c.createUnit); router.put('/units/:id',c.updateUnit); router.delete('/units/:id',c.deleteUnit); module.exports=router;

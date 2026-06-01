@@ -1,13 +1,6 @@
-import { useState } from "react";
-
-export default function Admin({ controller }) {
-  const [loginForm, setLoginForm] = useState({ email: "admin@mcs.edu.pg", password: "admin123" });
-  const [notice, setNotice] = useState({ title: "", message: "" });
-  const admin = controller.state.admin;
-
-  if (!admin) {
-    return <main className="screen"><section className="card"><h2>Admin Login</h2><input placeholder="Email" value={loginForm.email} onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })} /><input placeholder="Password" type="password" value={loginForm.password} onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })} /><button onClick={() => controller.login(loginForm.email, loginForm.password)}>Login</button></section></main>;
-  }
-
-  return <main className="screen"><section className="card"><h2>Admin Content Management</h2><p>Logged in as {admin.name}</p><h3>Create Announcement</h3><input placeholder="Title" value={notice.title} onChange={(e) => setNotice({ ...notice, title: e.target.value })} /><textarea placeholder="Message" value={notice.message} onChange={(e) => setNotice({ ...notice, message: e.target.value })} /><button onClick={() => controller.addAnnouncement(notice)}>Publish Announcement</button></section></main>;
-}
+import { useState } from 'react'
+import { login } from '../services/authService'
+import { createAnnouncement } from '../services/announcementService'
+import { createCareer } from '../services/careerService'
+import { createUnit } from '../services/curriculumService'
+export default function Admin({ controller }) { const [email,setEmail]=useState('admin@mcs.edu.pg'); const [password,setPassword]=useState('admin123'); const [msg,setMsg]=useState(''); const [form,setForm]=useState({type:'announcement', title:'', message:'', code:'', year:1, semester:1, credits:10, pathway:'Software Development'}); async function doLogin(){ const r=await login(email,password); localStorage.setItem('mcs_token', r.data.token); setMsg('Admin login successful') } async function save(){ if(form.type==='announcement') await createAnnouncement({title:form.title,message:form.message}); if(form.type==='career') await createCareer({title:form.title,description:form.message,pathway:form.pathway}); if(form.type==='unit') await createUnit({code:form.code,title:form.title,description:form.message,year:Number(form.year),semester:Number(form.semester),credits:Number(form.credits),pathway:form.pathway}); setMsg('Saved successfully'); controller.reload(); } return <main className="container"><h2 className="section-title">Admin Content Management</h2><div className="grid grid-2"><div className="card"><h3>Admin Login</h3><input className="input" value={email} onChange={e=>setEmail(e.target.value)} /><br/><br/><input className="input" type="password" value={password} onChange={e=>setPassword(e.target.value)} /><br/><br/><button className="btn" onClick={doLogin}>Login</button><p className="muted">{msg}</p></div><div className="card"><h3>Add Content</h3><select className="select" value={form.type} onChange={e=>setForm({...form,type:e.target.value})}><option value="announcement">Announcement</option><option value="career">Career</option><option value="unit">Unit</option></select><br/><br/>{form.type==='unit' && <><input className="input" placeholder="Unit Code" value={form.code} onChange={e=>setForm({...form,code:e.target.value})}/><br/><br/></>}<input className="input" placeholder="Title" value={form.title} onChange={e=>setForm({...form,title:e.target.value})}/><br/><br/><textarea className="textarea" placeholder="Description or message" value={form.message} onChange={e=>setForm({...form,message:e.target.value})}/><br/><br/>{form.type!=='announcement' && <input className="input" placeholder="Pathway" value={form.pathway} onChange={e=>setForm({...form,pathway:e.target.value})}/>}<br/><br/><button className="btn" onClick={save}>Save Content</button></div></div></main> }

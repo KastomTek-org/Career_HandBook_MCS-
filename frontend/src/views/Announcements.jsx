@@ -1,3 +1,2 @@
-export default function Announcements({ controller }) {
-  return <main className="screen"><h2>Announcements</h2><div className="list">{controller.state.announcements.map((item) => <article className="card" key={item.id}><small>{item.date}</small><h3>{item.title}</h3><p>{item.message}</p></article>)}</div></main>;
-}
+import { Megaphone } from 'lucide-react'
+export default function Announcements({ controller }) { return <main className="container"><h2 className="section-title">Announcements</h2><div className="grid">{controller.announcements.map(a=><div className="card" key={a.id}><div className="row"><div className="icon-box" style={{background:'#10b981', marginBottom:0}}><Megaphone/></div><div><h3>{a.title}</h3><p className="muted">{a.date}</p></div></div><p>{a.message}</p></div>)}</div></main> }

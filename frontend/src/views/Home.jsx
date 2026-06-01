@@ -1,11 +1,3 @@
-export default function Home({ controller }) {
-  const menu = [
-    ["Program Overview", "program"],
-    ["Entry Requirements", "program"],
-    ["Curriculum Structure", "curriculum"],
-    ["Career Pathways", "careers"],
-    ["Announcements", "announcements"],
-    ["Admin Panel", "admin"],
-  ];
-  return <main className="screen"><section className="hero"><h2>Welcome to the MCS Handbook App</h2><p>View program details, units, career pathways, search, bookmarks, and department announcements.</p></section><div className="grid">{menu.map(([label, view]) => <button className="card" key={label} onClick={() => controller.setView(view)}><h3>{label}</h3><p>Open {label.toLowerCase()}</p></button>)}</div></main>;
-}
+import { BookOpen, Briefcase, GraduationCap, Megaphone } from 'lucide-react'
+import DashboardCard from '../components/DashboardCard'
+export default function Home({ controller }) { return <main className="container"><section className="hero"><h1>Bachelor of Mathematics & Computing Science</h1><p>Explore program details, entry requirements, curriculum, units, career pathways, announcements, and favourite units in one mobile-friendly app.</p></section><div className="space"/><div className="grid grid-4"><DashboardCard icon={GraduationCap} title="Program" text="Overview and requirements" color="#2563eb" onClick={()=>controller.setScreen('program')}/><DashboardCard icon={BookOpen} title="Curriculum" text={`${controller.units.length} units available`} color="#7c3aed" onClick={()=>controller.setScreen('curriculum')}/><DashboardCard icon={Briefcase} title="Careers" text="Pathways and outcomes" color="#f59e0b" onClick={()=>controller.setScreen('careers')}/><DashboardCard icon={Megaphone} title="Updates" text="Department notices" color="#10b981" onClick={()=>controller.setScreen('announcements')}/></div></main> }

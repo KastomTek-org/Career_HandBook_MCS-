@@ -1,5 +1,1 @@
-export default function Program({ controller }) {
-  const { program, entryRequirements } = controller.state;
-  if (!program) return null;
-  return <main className="screen"><h2>Program Overview</h2><section className="card"><h3>{program.title}</h3><p><strong>Faculty:</strong> {program.faculty}</p><p>{program.summary}</p><h3>Graduate Attributes</h3><ul>{program.graduateAttributes.map((item) => <li key={item}>{item}</li>)}</ul><h3>Entry Requirements</h3><ul>{entryRequirements.map((item) => <li key={item}>{item}</li>)}</ul></section></main>;
-}
+export default function Program({ controller }) { const p=controller.program; if(!p) return <main className="container">Loading...</main>; return <main className="container"><h2 className="section-title">Program Overview</h2><div className="grid grid-2"><div className="card"><h2>{p.title}</h2><p className="muted">{p.faculty}</p><p>{p.description}</p><h3>Graduate Attributes</h3>{p.graduateAttributes.map(x=><span key={x} className="badge blue" style={{margin:4}}>{x}</span>)}</div><div className="card"><h2>Entry Requirements</h2><ul>{p.entryRequirements.map(x=><li key={x}>{x}</li>)}</ul></div></div></main> }

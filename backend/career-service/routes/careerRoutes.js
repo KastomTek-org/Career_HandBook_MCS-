@@ -1,5 +1,1 @@
-const router = require("express").Router();
-const controller = require("../controllers/careerController");
-router.get("/", controller.getCareers);
-router.post("/", controller.createCareer);
-module.exports = router;
+const router=require('express').Router(); const c=require('../controllers/careerController'); router.get('/',c.getCareers); router.post('/',c.createCareer); module.exports=router;

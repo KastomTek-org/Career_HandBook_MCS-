@@ -1,89 +1,63 @@
-import { useEffect, useMemo, useState } from "react";
-import { initialAppState } from "../models/appModel";
-import { api } from "../services/api";
+import { useEffect, useMemo, useState } from 'react'
+import { getProgram } from '../services/handbookService'
+import { getUnits } from '../services/curriculumService'
+import { getCareers } from '../services/careerService'
+import { getAnnouncements } from '../services/announcementService'
+import { addBookmark, getBookmarks, removeBookmark } from '../services/bookmarkService'
 
-export function useAppController() {
-  const [state, setState] = useState(initialAppState);
+export default function useAppController() {
+  const [screen, setScreen] = useState('home')
+  const [program, setProgram] = useState(null)
+  const [units, setUnits] = useState([])
+  const [careers, setCareers] = useState([])
+  const [announcements, setAnnouncements] = useState([])
+  const [bookmarks, setBookmarks] = useState([])
+  const [selectedUnit, setSelectedUnit] = useState(null)
+  const [query, setQuery] = useState('')
+  const [year, setYear] = useState('All')
+  const [semester, setSemester] = useState('All')
+  const [loading, setLoading] = useState(true)
 
-  const setView = (view) => setState((s) => ({ ...s, currentView: view, error: "" }));
-  const setSearchTerm = (searchTerm) => setState((s) => ({ ...s, searchTerm }));
-  const setYearFilter = (yearFilter) => setState((s) => ({ ...s, yearFilter }));
-  const setSemesterFilter = (semesterFilter) => setState((s) => ({ ...s, semesterFilter }));
-
-  async function loadInitialData() {
+  async function loadData() {
+    setLoading(true)
     try {
-      setState((s) => ({ ...s, loading: true }));
-      const [program, entry, units, careers, announcements, bookmarks] = await Promise.all([
-        api.get("/handbook/program"),
-        api.get("/handbook/entry-requirements"),
-        api.get("/curriculum/units"),
-        api.get("/careers"),
-        api.get("/announcements"),
-        api.get("/bookmarks"),
-      ]);
-      setState((s) => ({
-        ...s,
-        program: program.data,
-        entryRequirements: entry.data,
-        units: units.data,
-        careers: careers.data,
-        announcements: announcements.data,
-        bookmarks: bookmarks.data,
-        loading: false,
-      }));
-    } catch (error) {
-      setState((s) => ({ ...s, loading: false, error: "Unable to load app data." }));
+      const [p, u, c, a, b] = await Promise.all([
+        getProgram(), getUnits(), getCareers(), getAnnouncements(), getBookmarks()
+      ])
+      setProgram(p.data)
+      setUnits(u.data)
+      setCareers(c.data)
+      setAnnouncements(a.data)
+      setBookmarks(b.data.map(x => x.unitId))
+    } finally {
+      setLoading(false)
     }
   }
 
-  async function login(email, password) {
-    try {
-      const response = await api.post("/auth/login", { email, password });
-      localStorage.setItem("mcs_token", response.data.token);
-      setState((s) => ({ ...s, admin: response.data.user, currentView: "admin" }));
-    } catch {
-      setState((s) => ({ ...s, error: "Invalid admin login." }));
+  useEffect(() => { loadData() }, [])
+
+  const filteredUnits = useMemo(() => units.filter(unit => {
+    const q = query.toLowerCase()
+    const matchesQuery = !q || unit.code.toLowerCase().includes(q) || unit.title.toLowerCase().includes(q) || unit.pathway.toLowerCase().includes(q)
+    const matchesYear = year === 'All' || Number(year) === unit.year
+    const matchesSemester = semester === 'All' || Number(semester) === unit.semester
+    return matchesQuery && matchesYear && matchesSemester
+  }), [units, query, year, semester])
+
+  async function toggleBookmark(unitId) {
+    if (bookmarks.includes(unitId)) {
+      await removeBookmark(unitId)
+      setBookmarks(prev => prev.filter(id => id !== unitId))
+    } else {
+      await addBookmark(unitId)
+      setBookmarks(prev => [...prev, unitId])
     }
-  }
-
-  async function addAnnouncement(formData) {
-    const response = await api.post("/announcements", formData);
-    setState((s) => ({ ...s, announcements: [response.data, ...s.announcements] }));
-  }
-
-  async function toggleBookmark(unitCode) {
-    const response = await api.post("/bookmarks/toggle", { unitCode });
-    setState((s) => ({ ...s, bookmarks: response.data }));
   }
 
   function openUnit(unit) {
-    setState((s) => ({ ...s, selectedUnit: unit, currentView: "unitDetails" }));
+    setSelectedUnit(unit)
+    setScreen('unitDetails')
   }
 
-  const filteredUnits = useMemo(() => {
-    return state.units.filter((unit) => {
-      const q = state.searchTerm.toLowerCase();
-      const matchesSearch = unit.code.toLowerCase().includes(q) || unit.title.toLowerCase().includes(q) || unit.pathway.toLowerCase().includes(q);
-      const matchesYear = state.yearFilter === "All" || unit.year === Number(state.yearFilter);
-      const matchesSemester = state.semesterFilter === "All" || unit.semester === Number(state.semesterFilter);
-      return matchesSearch && matchesYear && matchesSemester;
-    });
-  }, [state.units, state.searchTerm, state.yearFilter, state.semesterFilter]);
-
-  useEffect(() => {
-    loadInitialData();
-  }, []);
-
-  return {
-    state,
-    filteredUnits,
-    setView,
-    setSearchTerm,
-    setYearFilter,
-    setSemesterFilter,
-    openUnit,
-    toggleBookmark,
-    login,
-    addAnnouncement,
-  };
+  return { screen, setScreen, program, units, careers, announcements, bookmarks, selectedUnit, query, setQuery, year, setYear, semester, setSemester, loading, filteredUnits, toggleBookmark, openUnit, reload: loadData }
 }

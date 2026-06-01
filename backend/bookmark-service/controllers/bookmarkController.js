@@ -1,10 +1,1 @@
-let bookmarks = require("../models/Bookmark");
-exports.getBookmarks = (req, res) => res.json(bookmarks);
-exports.toggleBookmark = (req, res) => {
-  const { unitCode } = req.body;
-  if (!unitCode) return res.status(400).json({ message: "unitCode is required" });
-  bookmarks = bookmarks.includes(unitCode)
-    ? bookmarks.filter((code) => code !== unitCode)
-    : [...bookmarks, unitCode];
-  res.json(bookmarks);
-};
+const Bookmark=require('../models/BookmarkModel'); exports.getBookmarks=(req,res)=>res.json(Bookmark.all()); exports.addBookmark=(req,res)=>res.status(201).json(Bookmark.add(req.body.unitId)); exports.removeBookmark=(req,res)=>res.json(Bookmark.remove(req.params.unitId));

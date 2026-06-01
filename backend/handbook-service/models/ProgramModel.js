@@ -1,0 +1,1 @@
+const fs=require('fs'); const path=require('path'); const file=path.join(__dirname,'../data/program.json'); exports.get=()=>JSON.parse(fs.readFileSync(file)); exports.save=(data)=>{fs.writeFileSync(file,JSON.stringify(data,null,2)); return data;};
