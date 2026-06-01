@@ -1,0 +1,38 @@
+[
+  {
+    "id": "c1",
+    "title": "Software Developer",
+    "pathway": "Software Development",
+    "description": "Build web, mobile, desktop, and enterprise applications."
+  },
+  {
+    "id": "c2",
+    "title": "Database Administrator",
+    "pathway": "Data and Information Systems",
+    "description": "Design, maintain, secure, and optimize databases."
+  },
+  {
+    "id": "c3",
+    "title": "Systems Analyst",
+    "pathway": "Professional Practice",
+    "description": "Analyse business needs and design effective information systems."
+  },
+  {
+    "id": "c4",
+    "title": "ICT Officer",
+    "pathway": "Computing Foundations",
+    "description": "Support organizational hardware, software, networks, users, and systems."
+  },
+  {
+    "id": "c5",
+    "title": "Data Analyst",
+    "pathway": "Data and Information Systems",
+    "description": "Use data tools to produce insights and reports for decision-making."
+  },
+  {
+    "id": "c6",
+    "title": "Web Application Developer",
+    "pathway": "Software Development",
+    "description": "Create dynamic websites, APIs, and database-driven web systems."
+  }
+]

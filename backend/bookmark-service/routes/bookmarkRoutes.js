@@ -1,5 +1,1 @@
-const router = require("express").Router();
-const controller = require("../controllers/bookmarkController");
-router.get("/", controller.getBookmarks);
-router.post("/toggle", controller.toggleBookmark);
-module.exports = router;
+const router=require('express').Router(); const c=require('../controllers/bookmarkController'); router.get('/',c.getBookmarks); router.post('/',c.addBookmark); router.delete('/:unitId',c.removeBookmark); module.exports=router;

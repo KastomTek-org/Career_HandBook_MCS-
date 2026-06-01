@@ -1,16 +1,1 @@
-let units = require("../models/Unit");
-exports.getUnits = (req, res) => res.json(units);
-exports.getUnitById = (req, res) => {
-  const unit = units.find((u) => u.id === Number(req.params.id));
-  if (!unit) return res.status(404).json({ message: "Unit not found" });
-  res.json(unit);
-};
-exports.createUnit = (req, res) => {
-  const unit = { id: Date.now(), ...req.body };
-  units.push(unit);
-  res.status(201).json(unit);
-};
-exports.updateUnit = (req, res) => {
-  units = units.map((u) => u.id === Number(req.params.id) ? { ...u, ...req.body } : u);
-  res.json(units.find((u) => u.id === Number(req.params.id)));
-};
+const Unit=require('../models/UnitModel'); exports.getUnits=(req,res)=>{let list=Unit.all(); const {q,year,semester}=req.query; if(q){const s=q.toLowerCase(); list=list.filter(u=>u.code.toLowerCase().includes(s)||u.title.toLowerCase().includes(s)||u.pathway.toLowerCase().includes(s));} if(year) list=list.filter(u=>u.year===Number(year)); if(semester) list=list.filter(u=>u.semester===Number(semester)); res.json(list);}; exports.getUnit=(req,res)=>{const u=Unit.find(req.params.id); if(!u)return res.status(404).json({message:'Unit not found'}); res.json(u);}; exports.createUnit=(req,res)=>res.status(201).json(Unit.create(req.body)); exports.updateUnit=(req,res)=>{const u=Unit.update(req.params.id,req.body); if(!u)return res.status(404).json({message:'Unit not found'}); res.json(u);}; exports.deleteUnit=(req,res)=>res.json(Unit.remove(req.params.id));

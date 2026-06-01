@@ -1,6 +1,1 @@
-const router = require("express").Router();
-const controller = require("../controllers/handbookController");
-router.get("/program", controller.getProgram);
-router.get("/entry-requirements", controller.getEntryRequirements);
-router.put("/program", controller.updateProgram);
-module.exports = router;
+const router=require('express').Router(); const c=require('../controllers/handbookController'); router.get('/program',c.getProgram); router.put('/program',c.updateProgram); module.exports=router;

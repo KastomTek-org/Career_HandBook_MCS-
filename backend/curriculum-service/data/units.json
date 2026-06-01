@@ -1,0 +1,92 @@
+[
+  {
+    "id": "u1",
+    "code": "MCS101",
+    "title": "Introduction to Computing",
+    "year": 1,
+    "semester": 1,
+    "credits": 10,
+    "pathway": "Computing Foundations",
+    "description": "Introduces computer systems, digital literacy, and basic computing concepts."
+  },
+  {
+    "id": "u2",
+    "code": "IS113",
+    "title": "Spreadsheet Management",
+    "year": 1,
+    "semester": 1,
+    "credits": 10,
+    "pathway": "Business Computing",
+    "description": "Covers spreadsheets, formulas, charts, and business data analysis."
+  },
+  {
+    "id": "u3",
+    "code": "MCS120",
+    "title": "Discrete Mathematics",
+    "year": 1,
+    "semester": 2,
+    "credits": 10,
+    "pathway": "Computing Foundations",
+    "description": "Introduces logic, sets, relations, functions, and proof ideas for computing."
+  },
+  {
+    "id": "u4",
+    "code": "IS201",
+    "title": "Systems Analysis and Design",
+    "year": 2,
+    "semester": 1,
+    "credits": 10,
+    "pathway": "Data and Information Systems",
+    "description": "Covers requirements, process modelling, data modelling, UML, and system documentation."
+  },
+  {
+    "id": "u5",
+    "code": "IS301",
+    "title": "Structured Programming",
+    "year": 3,
+    "semester": 1,
+    "credits": 10,
+    "pathway": "Software Development",
+    "description": "Develops programming skills using variables, control structures, functions, arrays, structures, and files."
+  },
+  {
+    "id": "u6",
+    "code": "IS302",
+    "title": "Database Design",
+    "year": 3,
+    "semester": 2,
+    "credits": 10,
+    "pathway": "Data and Information Systems",
+    "description": "Explores ER diagrams, relational mapping, normalization, SQL, and database implementation."
+  },
+  {
+    "id": "u7",
+    "code": "IS312",
+    "title": "Web Application Development",
+    "year": 3,
+    "semester": 2,
+    "credits": 10,
+    "pathway": "Software Development",
+    "description": "Covers frontend, backend, database connectivity, MVC, authentication, and deployment."
+  },
+  {
+    "id": "u8",
+    "code": "IS401",
+    "title": "Project Management",
+    "year": 4,
+    "semester": 1,
+    "credits": 10,
+    "pathway": "Professional Practice",
+    "description": "Covers project planning, scheduling, risk, communication, monitoring, and reporting."
+  },
+  {
+    "id": "u9",
+    "code": "MCS401",
+    "title": "Final Year Computing Project",
+    "year": 4,
+    "semester": 2,
+    "credits": 20,
+    "pathway": "Professional Practice",
+    "description": "Students design, build, test, and present a computing solution for a real client or problem."
+  }
+]

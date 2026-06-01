@@ -1,4 +1,1 @@
-const { program, entryRequirements } = require("../models/Program");
-exports.getProgram = (req, res) => res.json(program);
-exports.getEntryRequirements = (req, res) => res.json(entryRequirements);
-exports.updateProgram = (req, res) => res.json({ ...program, ...req.body });
+const Program=require('../models/ProgramModel'); exports.getProgram=(req,res)=>res.json(Program.get()); exports.updateProgram=(req,res)=>res.json(Program.save({...Program.get(),...req.body}));

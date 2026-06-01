@@ -1,5 +1,1 @@
-export default function UnitDetails({ controller }) {
-  const unit = controller.state.selectedUnit;
-  if (!unit) return <main className="screen"><p>No unit selected.</p></main>;
-  return <main className="screen"><section className="card"><small>Year {unit.year} • Semester {unit.semester}</small><h2>{unit.code} - {unit.title}</h2><p>{unit.description}</p><p><strong>Credit Points:</strong> {unit.credits}</p><p><strong>Pathway:</strong> {unit.pathway}</p><button onClick={() => controller.setView("curriculum")}>Back to Curriculum</button></section></main>;
-}
+export default function UnitDetails({ controller }) { const u=controller.selectedUnit; if(!u) return <main className="container">No unit selected.</main>; return <main className="container"><h2 className="section-title">Unit Details</h2><div className="card"><span className="badge purple">{u.pathway}</span><h1>{u.code} — {u.title}</h1><p className="muted">Year {u.year} • Semester {u.semester} • {u.credits} credits</p><p>{u.description}</p><button className="btn secondary" onClick={()=>controller.setScreen('curriculum')}>Back to Curriculum</button></div></main> }
