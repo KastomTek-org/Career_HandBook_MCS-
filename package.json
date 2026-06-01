@@ -1,0 +1,18 @@
+{
+    "name": "mcs-handbook-app",
+    "private": true,
+    "scripts": {
+        "install-all": "npm install --prefix frontend && npm install --prefix backend/api-gateway && npm install --prefix backend/auth-service && npm install --prefix backend/handbook-service && npm install --prefix backend/curriculum-service && npm install --prefix backend/career-service && npm install --prefix backend/announcement-service",
+        "frontend": "npm run dev --prefix frontend",
+        "gateway": "npm run dev --prefix backend/api-gateway",
+        "auth": "npm run dev --prefix backend/auth-service",
+        "handbook": "npm run dev --prefix backend/handbook-service",
+        "curriculum": "npm run dev --prefix backend/curriculum-service",
+        "career": "npm run dev --prefix backend/career-service",
+        "announcement": "npm run dev --prefix backend/announcement-service",
+        "dev": "concurrently \"npm run frontend\" \"npm run gateway\" \"npm run auth\" \"npm run handbook\" \"npm run curriculum\" \"npm run career\" \"npm run announcement\""
+    },
+    "devDependencies": {
+        "concurrently": "^10.0.1"
+    }
+}
